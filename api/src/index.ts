@@ -1,7 +1,7 @@
 import bodyParser from "body-parser"
 import cors from "cors"
 import express from "express"
-import PixivApi from "../src/pixiv/PixivApi"
+import PixivApi from "./PixivApi"
 
 const api = new PixivApi()
 
