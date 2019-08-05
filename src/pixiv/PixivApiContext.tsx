@@ -6,11 +6,7 @@ type ContextType = PixivApi
 const Context = React.createContext<ContextType | undefined>(undefined)
 
 export function PixivApiProvider(props: PropsWithChildren<{}>) {
-  const apiRef = useRef<PixivApi>()
-  if (apiRef.current == null) {
-    apiRef.current = new PixivApi()
-  }
-
+  const apiRef = useRef(new PixivApi())
   return (
     <Context.Provider value={apiRef.current}>{props.children}</Context.Provider>
   )

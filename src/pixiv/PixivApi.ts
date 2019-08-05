@@ -1,5 +1,5 @@
 import Axios from "axios"
-import * as querystring from "querystring"
+import querystring from "querystring"
 
 const clientId = "MOBrBDS8blbauoSck0ZfDbtuzpyT"
 const clientSecret = "lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj"
