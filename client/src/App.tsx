@@ -1,9 +1,7 @@
 import Axios from "axios"
 import React, { useState } from "react"
-import { usePixivApi } from "./pixiv/PixivApiContext"
 
 function App() {
-  const api = usePixivApi()
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
