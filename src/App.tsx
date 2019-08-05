@@ -1,3 +1,4 @@
+import Axios from "axios"
 import React, { useState } from "react"
 import { usePixivApi } from "./pixiv/PixivApiContext"
 
@@ -7,7 +8,11 @@ function App() {
   const [password, setPassword] = useState("")
 
   const handleSubmit = async () => {
-    await api.login(username, password)
+    const res = await Axios.post("http://localhost:4000/login", {
+      username,
+      password,
+    })
+    console.log(res.data)
   }
 
   return (

@@ -21,6 +21,6 @@ export default class PixivApi {
       data: querystring.stringify(requestData),
     })
 
-    console.log(data)
+    return data
   }
 }
