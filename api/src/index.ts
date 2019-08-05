@@ -16,4 +16,6 @@ app.post("/login", async (req, res, next) => {
   res.send(result)
 })
 
-app.listen(4000)
+app.listen(4000, () => {
+  console.log(`running on http://localhost:4000`)
+})
