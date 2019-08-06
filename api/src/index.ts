@@ -131,6 +131,7 @@ async function startServer() {
 
   await server.start({
     endpoint: "/api",
+    playground: "/api",
     port,
     cors: {
       origin: [
