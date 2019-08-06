@@ -11,7 +11,7 @@
     "start": "npm-run-all --parallel start:*",
     "heroku-postbuild": "yarn build:client"
   },
-  "devDependencies": {
+  "dependencies": {
     "npm-run-all": "^4.1.5"
   },
   "workspaces": [
