@@ -1,4 +1,5 @@
 import compression from "compression"
+import express from "express"
 import session from "express-session"
 import { GraphQLServer } from "graphql-yoga"
 import { makeSchema, mutationType, queryType, stringArg } from "nexus"
@@ -123,13 +124,19 @@ server.express.use(
   }),
 )
 
+server.express.use(express.static(`${__dirname}/../../client/build`))
+
 async function startServer() {
-  const port = 4000
+  const port = process.env.PORT || 4000
 
   await server.start({
+    endpoint: "/api",
     port,
     cors: {
-      origin: ["http://localhost:3000", "http://localhost:4000"],
+      origin: [
+        "http://localhost:3000", // client dev server
+        "http://localhost:4000", // api dev server
+      ],
       credentials: true,
     },
   })
