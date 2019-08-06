@@ -110,6 +110,9 @@ const server = new GraphQLServer({
 
 server.express.use(compression())
 
+// https://www.npmjs.com/package/express-session#cookiesecure
+server.express.set("trust proxy", 1)
+
 server.express.use(
   session({
     name: "qid",
