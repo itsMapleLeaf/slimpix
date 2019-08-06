@@ -3,6 +3,7 @@ import session from "express-session"
 import { GraphQLServer } from "graphql-yoga"
 import { makeSchema, mutationType, queryType, stringArg } from "nexus"
 import { AppContext } from "./app-context"
+import { sessionSecret } from "./env"
 import { days } from "./helpers/days"
 import { PixivApi } from "./pixiv-api"
 
@@ -106,7 +107,7 @@ server.express.use(compression())
 server.express.use(
   session({
     name: "qid",
-    secret: `some-random-secret-here`,
+    secret: sessionSecret,
     resave: true,
     saveUninitialized: true,
     cookie: {
