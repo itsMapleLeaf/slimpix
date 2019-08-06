@@ -115,7 +115,7 @@ server.express.set("trust proxy", 1)
 
 server.express.use(
   session({
-    name: "qid",
+    name: "session",
     secret: sessionSecret,
     resave: true,
     saveUninitialized: true,
