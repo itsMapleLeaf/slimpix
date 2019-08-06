@@ -117,7 +117,8 @@ server.express.use(
     resave: true,
     saveUninitialized: true,
     cookie: {
-      secure: process.env.NODE_ENV === "production",
+      // secure: process.env.NODE_ENV === "production",
+      secure: false,
       httpOnly: true,
       maxAge: days(30),
       sameSite: false,
