@@ -119,7 +119,7 @@ server.express.use(
 )
 
 async function startServer() {
-  const port = process.env.PORT || 4000
+  const port = 4000
 
   await server.start({
     port,
