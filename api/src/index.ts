@@ -134,6 +134,14 @@ async function startServer() {
     endpoint: "/api",
     playground: "/api",
     port,
+    cors: {
+      origin: [
+        "http://localhost:3000", // client dev server
+        "http://localhost:4000", // api dev server
+        "https://enigmatic-citadel-67115.herokuapp.com/", // live heroku url
+      ],
+      credentials: true,
+    },
   })
 
   console.log(`Api running on http://localhost:${port}`)
