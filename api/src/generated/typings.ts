@@ -3,7 +3,7 @@
  * Do not make changes to this file directly
  */
 
-
+import * as ctx from "../app-context"
 
 
 
@@ -33,14 +33,26 @@ export interface NexusGenAllTypes extends NexusGenRootTypes {
 
 export interface NexusGenFieldTypes {
   Mutation: { // field return type
-    test: string; // String!
+    login: boolean; // Boolean!
+    logout: boolean; // Boolean!
+    signup: boolean; // Boolean!
   }
   Query: { // field return type
-    test: string; // String!
+    login: boolean; // Boolean!
   }
 }
 
 export interface NexusGenArgTypes {
+  Mutation: {
+    login: { // args
+      password: string; // String!
+      username: string; // String!
+    }
+    signup: { // args
+      password: string; // String!
+      username: string; // String!
+    }
+  }
 }
 
 export interface NexusGenAbstractResolveReturnTypes {
@@ -61,7 +73,7 @@ export type NexusGenScalarNames = "Boolean" | "Float" | "ID" | "Int" | "String";
 export type NexusGenUnionNames = never;
 
 export interface NexusGenTypes {
-  context: any;
+  context: ctx.AppContext;
   inputTypes: NexusGenInputs;
   rootTypes: NexusGenRootTypes;
   argTypes: NexusGenArgTypes;

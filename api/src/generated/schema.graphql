@@ -3,9 +3,11 @@
 
 
 type Mutation {
-  test: String!
+  login(password: String!, username: String!): Boolean!
+  logout: Boolean!
+  signup(password: String!, username: String!): Boolean!
 }
 
 type Query {
-  test: String!
+  login: Boolean!
 }
