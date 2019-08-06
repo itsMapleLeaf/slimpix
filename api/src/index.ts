@@ -134,13 +134,6 @@ async function startServer() {
     endpoint: "/api",
     playground: "/api",
     port,
-    cors: {
-      origin: [
-        "http://localhost:3000", // client dev server
-        "http://localhost:4000", // api dev server
-      ],
-      credentials: true,
-    },
   })
 
   console.log(`Api running on http://localhost:${port}`)
