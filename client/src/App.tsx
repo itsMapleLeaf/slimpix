@@ -27,30 +27,30 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <div>
+    <main>
+      <section>
         <label>username</label>
         <input
           type="text"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
         />
-      </div>
+      </section>
 
-      <div>
+      <section>
         <label>password</label>
         <input
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-      </div>
+      </section>
 
       <button onClick={handleSubmit}>login</button>
 
       <pre>{JSON.stringify(result, null, 2)}</pre>
       <pre>{JSON.stringify(isLogin.data, null, 2)}</pre>
-    </div>
+    </main>
   )
 }
 
