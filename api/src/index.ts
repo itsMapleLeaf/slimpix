@@ -14,7 +14,12 @@ type UserRecord = {
   }
 }
 
-const users: UserRecord = {}
+const users: UserRecord = {
+  test: {
+    username: "test",
+    password: "test",
+  },
+}
 
 const Query = queryType({
   definition(t) {
