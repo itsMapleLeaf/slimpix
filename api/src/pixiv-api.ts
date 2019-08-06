@@ -4,7 +4,7 @@ import querystring from "querystring"
 const clientId = "MOBrBDS8blbauoSck0ZfDbtuzpyT"
 const clientSecret = "lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj"
 
-export default class PixivApi {
+export class PixivApi {
   async login(username: string, password: string) {
     const requestData = {
       client_id: clientId,

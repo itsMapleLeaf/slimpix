@@ -1,21 +1,44 @@
-import bodyParser from "body-parser"
-import cors from "cors"
-import express from "express"
-import PixivApi from "./PixivApi"
+import compression from "compression"
+import { GraphQLServer } from "graphql-yoga"
+import { makeSchema, mutationType, queryType } from "nexus"
+import { AppContext } from "./app-context"
+import { PixivApi } from "./pixiv-api"
 
-const api = new PixivApi()
-
-const app = express()
-
-app.use(cors())
-app.use(bodyParser.json())
-
-app.post("/login", async (req, res, next) => {
-  const { username, password } = req.body
-  const result = await api.login(username, password)
-  res.send(result)
+const Query = queryType({
+  definition(t) {
+    t.string("test", { resolve: () => "hi" })
+  },
 })
 
-app.listen(4000, () => {
-  console.log(`running on http://localhost:4000`)
+const Mutation = mutationType({
+  definition(t) {
+    t.string("test", { resolve: () => "hi" })
+  },
 })
+
+const schema = makeSchema({
+  types: [Query, Mutation],
+  outputs: {
+    schema: __dirname + "/generated/schema.graphql",
+    typegen: __dirname + "/generated/typings.ts",
+  },
+})
+
+const server = new GraphQLServer({
+  schema,
+  context: (params): AppContext => ({
+    ...params,
+    api: new PixivApi(),
+  }),
+})
+
+server.express.use(compression())
+
+async function startServer() {
+  const port = process.env.PORT || 4000
+  await server.start({ port })
+
+  console.log(`Server is running on http://localhost:${port}`)
+}
+
+startServer().catch(console.error)
