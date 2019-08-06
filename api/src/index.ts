@@ -120,6 +120,7 @@ server.express.use(
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       maxAge: days(30),
+      sameSite: false,
     },
   }),
 )
