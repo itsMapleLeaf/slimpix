@@ -129,7 +129,7 @@ async function startServer() {
     },
   })
 
-  console.log(`Server is running on http://localhost:${port}`)
+  console.log(`Api running on http://localhost:${port}`)
 }
 
 startServer().catch(console.error)

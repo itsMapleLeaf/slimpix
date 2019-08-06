@@ -8,7 +8,7 @@
     "build:client": "yarn workspace client build",
     "start:api": "yarn workspace api start",
     "start:client": "yarn workspace client serve",
-    "start": "yarn start:client",
+    "start": "npm-run-all --parallel start:*",
     "heroku-postbuild": "yarn build:client"
   },
   "dependencies": {
