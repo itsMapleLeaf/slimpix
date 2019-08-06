@@ -1,16 +1,29 @@
-import Axios from "axios"
+import { gql } from "apollo-boost"
 import React, { useState } from "react"
+import { useMutation, useQuery } from "react-apollo"
+
+const loginMutation = gql`
+  mutation login($username: String!, $password: String!) {
+    login(username: $username, password: $password)
+  }
+`
+
+const isLoginQuery = gql`
+  query isLogin {
+    login
+  }
+`
 
 function App() {
+  const [login, result] = useMutation(loginMutation)
+  const isLogin = useQuery(isLoginQuery)
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
   const handleSubmit = async () => {
-    const res = await Axios.post("http://localhost:4000/login", {
-      username,
-      password,
+    await login({
+      variables: { username, password },
     })
-    console.log(res.data)
   }
 
   return (
@@ -20,7 +33,7 @@ function App() {
         <input
           type="text"
           value={username}
-          onChange={e => setUsername(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
         />
       </div>
 
@@ -29,11 +42,14 @@ function App() {
         <input
           type="password"
           value={password}
-          onChange={e => setPassword(e.target.value)}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
 
       <button onClick={handleSubmit}>login</button>
+
+      <pre>{JSON.stringify(result, null, 2)}</pre>
+      <pre>{JSON.stringify(isLogin.data, null, 2)}</pre>
     </div>
   )
 }
