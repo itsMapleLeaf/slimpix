@@ -80,8 +80,8 @@ const Mutation = mutationType({
 const schema = makeSchema({
   types: [Query, Mutation],
   outputs: {
-    schema: __dirname + "/generated/schema.graphql",
-    typegen: __dirname + "/generated/typings.ts",
+    schema: `${__dirname}/generated/schema.graphql`,
+    typegen: `${__dirname}/generated/typings.ts`,
   },
   typegenAutoConfig: {
     contextType: "ctx.AppContext",
