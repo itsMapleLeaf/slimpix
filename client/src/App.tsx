@@ -1,6 +1,6 @@
+import { useMutation, useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
 import React, { useState } from "react"
-import { useMutation, useQuery } from "react-apollo"
 
 const loginMutation = gql`
   mutation login($username: String!, $password: String!) {
