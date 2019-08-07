@@ -2,21 +2,19 @@ import { useMutation, useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
 import React, { useState } from "react"
 
-const loginMutation = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password)
-  }
-`
-
-const isLoginQuery = gql`
-  query isLogin {
-    login
-  }
-`
-
 function App() {
-  const [login, result] = useMutation(loginMutation)
-  const isLogin = useQuery(isLoginQuery)
+  const [login, result] = useMutation(gql`
+    mutation login($username: String!, $password: String!) {
+      login(username: $username, password: $password)
+    }
+  `)
+
+  const authUserQuery = useQuery(gql`
+    query isLogin {
+      authUser
+    }
+  `)
+
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
@@ -49,7 +47,7 @@ function App() {
       <button onClick={handleSubmit}>login</button>
 
       <pre>{JSON.stringify(result, null, 2)}</pre>
-      <pre>{JSON.stringify(isLogin.data, null, 2)}</pre>
+      <pre>{JSON.stringify(authUserQuery.data, null, 2)}</pre>
     </main>
   )
 }
