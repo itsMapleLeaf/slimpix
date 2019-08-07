@@ -35,20 +35,15 @@ export interface NexusGenFieldTypes {
   Mutation: { // field return type
     login: boolean; // Boolean!
     logout: boolean; // Boolean!
-    signup: boolean; // Boolean!
   }
   Query: { // field return type
-    login: boolean; // Boolean!
+    authUser: boolean; // Boolean!
   }
 }
 
 export interface NexusGenArgTypes {
   Mutation: {
     login: { // args
-      password: string; // String!
-      username: string; // String!
-    }
-    signup: { // args
       password: string; // String!
       username: string; // String!
     }

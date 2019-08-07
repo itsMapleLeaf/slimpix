@@ -24,9 +24,9 @@ const users: UserRecord = {
 
 const Query = queryType({
   definition(t) {
-    t.boolean("login", {
+    t.boolean("authUser", {
       resolve(root, args, { request }) {
-        return request.session != null && request.session.user != null
+        return request.session!.user != null
       },
     })
   },
@@ -34,38 +34,14 @@ const Query = queryType({
 
 const Mutation = mutationType({
   definition(t) {
-    t.boolean("signup", {
-      args: {
-        username: stringArg({ required: true }),
-        password: stringArg({ required: true }),
-      },
-
-      async resolve(_, { username, password }) {
-        if (users[username]) {
-          throw new Error("Another User with same username exists.")
-        }
-
-        users[username] = { username, password }
-
-        return true
-      },
-    })
-
     t.boolean("login", {
       args: {
         username: stringArg({ required: true }),
         password: stringArg({ required: true }),
       },
 
-      async resolve(_, { username, password }, { request }) {
-        const user = users[username]
-        const isPasswordCorrect = user != null && user.password === password
-
-        if (!user || !isPasswordCorrect) {
-          throw new Error("Invalid username or password")
-        }
-
-        request.session!.user = user
+      async resolve(_, { username, password }, context) {
+        const data = await context.api.login(username, password)
 
         return true
       },

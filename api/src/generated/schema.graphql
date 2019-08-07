@@ -5,9 +5,8 @@
 type Mutation {
   login(password: String!, username: String!): Boolean!
   logout: Boolean!
-  signup(password: String!, username: String!): Boolean!
 }
 
 type Query {
-  login: Boolean!
+  authUser: Boolean!
 }
