@@ -43,6 +43,14 @@ const Mutation = mutationType({
       async resolve(_, { username, password }, context) {
         const data = await context.api.login(username, password)
 
+        context.request.session!.user = {
+          pixiv: {
+            token: data.access_token,
+            refreshToken: data.refresh_token,
+            userId: data.user.id,
+          },
+        }
+
         return true
       },
     })
