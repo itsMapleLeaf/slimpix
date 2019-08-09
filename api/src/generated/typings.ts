@@ -13,6 +13,10 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  LoginInput: { // input type
+    password: string; // String!
+    username: string; // String!
+  }
 }
 
 export interface NexusGenEnums {
@@ -29,6 +33,7 @@ export interface NexusGenRootTypes {
 }
 
 export interface NexusGenAllTypes extends NexusGenRootTypes {
+  LoginInput: NexusGenInputs['LoginInput'];
 }
 
 export interface NexusGenFieldTypes {
@@ -44,8 +49,7 @@ export interface NexusGenFieldTypes {
 export interface NexusGenArgTypes {
   Mutation: {
     login: { // args
-      password: string; // String!
-      username: string; // String!
+      input: NexusGenInputs['LoginInput']; // LoginInput!
     }
   }
 }
@@ -57,7 +61,7 @@ export interface NexusGenInheritedFields {}
 
 export type NexusGenObjectNames = "Mutation" | "Query";
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = "LoginInput";
 
 export type NexusGenEnumNames = never;
 

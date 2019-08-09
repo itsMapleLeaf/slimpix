@@ -2,10 +2,11 @@ import compression from "compression"
 import express from "express"
 import session from "express-session"
 import { GraphQLServer } from "graphql-yoga"
-import { makeSchema, mutationType, queryType, stringArg } from "nexus"
+import { inputObjectType, makeSchema, mutationType, queryType } from "nexus"
 import { AppContext } from "./app-context"
 import { sessionSecret } from "./env"
 import { days } from "./helpers/days"
+import requiredInputArg from "./nexus/requiredInputArg"
 import { PixivApi } from "./pixiv-api"
 
 const Query = queryType({
@@ -18,15 +19,23 @@ const Query = queryType({
   },
 })
 
+const LoginInput = inputObjectType({
+  name: "LoginInput",
+  definition(t) {
+    t.string("username", { required: true })
+    t.string("password", { required: true })
+  },
+})
+
 const Mutation = mutationType({
   definition(t) {
     t.boolean("login", {
       args: {
-        username: stringArg({ required: true }),
-        password: stringArg({ required: true }),
+        input: requiredInputArg(LoginInput),
       },
 
-      async resolve(_, { username, password }, context) {
+      async resolve(_, { input }, context) {
+        const { username, password } = input
         const data = await context.api.login(username, password)
 
         context.request.session!.user = {

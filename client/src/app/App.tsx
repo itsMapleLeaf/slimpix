@@ -6,8 +6,8 @@ import useInput from "../form/useInput"
 
 function App() {
   const [login, result] = useMutation(gql`
-    mutation login($username: String!, $password: String!) {
-      login(username: $username, password: $password)
+    mutation login($input: LoginInput!) {
+      login(input: $input)
     }
   `)
 
@@ -22,7 +22,7 @@ function App() {
 
   const handleSubmit = async () => {
     await login({
-      variables: collectFormValues({ username, password }),
+      variables: { input: collectFormValues({ username, password }) },
     })
   }
 

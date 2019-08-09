@@ -2,8 +2,13 @@
 ### Do not make changes to this file directly
 
 
+input LoginInput {
+  password: String!
+  username: String!
+}
+
 type Mutation {
-  login(password: String!, username: String!): Boolean!
+  login(input: LoginInput!): Boolean!
   logout: Boolean!
 }
 
