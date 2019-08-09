@@ -3,7 +3,7 @@ import ApolloClient from "apollo-boost"
 import React from "react"
 import ReactDOM from "react-dom"
 import App from "./app/App"
-import * as serviceWorker from "./serviceWorker"
+import * as serviceWorker from "./app/serviceWorker"
 
 const client = new ApolloClient({
   uri: "/api",
