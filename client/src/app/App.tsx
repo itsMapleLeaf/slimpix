@@ -1,6 +1,8 @@
 import { useMutation, useQuery } from "@apollo/react-hooks"
 import { gql } from "apollo-boost"
-import React, { useState } from "react"
+import React from "react"
+import collectFormValues from "../form/collectFormValues"
+import useInput from "../form/useInput"
 
 function App() {
   const [login, result] = useMutation(gql`
@@ -15,12 +17,12 @@ function App() {
     }
   `)
 
-  const [username, setUsername] = useState("")
-  const [password, setPassword] = useState("")
+  const username = useInput()
+  const password = useInput()
 
   const handleSubmit = async () => {
     await login({
-      variables: { username, password },
+      variables: collectFormValues({ username, password }),
     })
   }
 
@@ -28,20 +30,12 @@ function App() {
     <main>
       <section>
         <label>username</label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+        <input type="text" {...username.bind} />
       </section>
 
       <section>
         <label>password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <input type="password" {...password.bind} />
       </section>
 
       <button onClick={handleSubmit}>login</button>
