@@ -8,20 +8,6 @@ import { sessionSecret } from "./env"
 import { days } from "./helpers/days"
 import { PixivApi } from "./pixiv-api"
 
-type UserRecord = {
-  [username in string]?: {
-    username: string
-    password: string
-  }
-}
-
-const users: UserRecord = {
-  test: {
-    username: "test",
-    password: "test",
-  },
-}
-
 const Query = queryType({
   definition(t) {
     t.boolean("authUser", {
