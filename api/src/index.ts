@@ -2,82 +2,12 @@ import compression from "compression"
 import express from "express"
 import session from "express-session"
 import { GraphQLServer } from "graphql-yoga"
-import { inputObjectType, makeSchema, mutationType, queryType } from "nexus"
 import { AppContext } from "./app-context"
 import { sessionSecret } from "./env"
 import { days } from "./helpers/days"
-import requiredInputArg from "./nexus/requiredInputArg"
+import { clientBuild } from "./paths"
 import { PixivApi } from "./pixiv-api"
-
-const Query = queryType({
-  definition(t) {
-    t.boolean("authUser", {
-      resolve(root, args, { request }) {
-        return request.session!.user != null
-      },
-    })
-  },
-})
-
-const LoginInput = inputObjectType({
-  name: "LoginInput",
-  definition(t) {
-    t.string("username", { required: true })
-    t.string("password", { required: true })
-  },
-})
-
-const Mutation = mutationType({
-  definition(t) {
-    t.boolean("login", {
-      args: {
-        input: requiredInputArg(LoginInput),
-      },
-
-      async resolve(_, { input }, context) {
-        const { username, password } = input
-        const data = await context.api.login(username, password)
-
-        context.request.session!.user = {
-          pixiv: {
-            token: data.access_token,
-            refreshToken: data.refresh_token,
-            userId: data.user.id,
-          },
-        }
-
-        return true
-      },
-    })
-
-    t.boolean("logout", {
-      async resolve(root, args, { request }) {
-        if (request.session && request.session.user) {
-          delete request.session.user
-          return true
-        }
-        return false
-      },
-    })
-  },
-})
-
-const schema = makeSchema({
-  types: [Query, Mutation],
-  outputs: {
-    schema: `${__dirname}/generated/schema.graphql`,
-    typegen: `${__dirname}/generated/typings.ts`,
-  },
-  typegenAutoConfig: {
-    contextType: "ctx.AppContext",
-    sources: [
-      {
-        alias: "ctx",
-        source: `${__dirname}/app-context.ts`,
-      },
-    ],
-  },
-})
+import { schema } from "./schema"
 
 const server = new GraphQLServer({
   schema,
@@ -107,7 +37,7 @@ server.express.use(
   }),
 )
 
-server.express.use(express.static(`${__dirname}/../../client/build`))
+server.express.use(express.static(clientBuild))
 
 async function startServer() {
   const port = process.env.PORT || 4000
